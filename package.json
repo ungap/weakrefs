@@ -1,0 +1,30 @@
+{
+  "name": "@ungap/weakrefs",
+  "version": "0.0.0",
+  "description": "WeakRef and FinalizationGroup for IE11+",
+  "main": "cjs/index.js",
+  "module": "esm/index.js",
+  "unpkg": "min.js",
+  "scripts": {
+    "build": "npm run cjs && npm run esm && npm run min && npm run test && npm run size",
+    "cjs": "cp index.js cjs/ && echo 'module.exports = self;' >> cjs/index.js",
+    "esm": "cp index.js esm/ && echo 'export const {WeakRef, FinalizationGroup} = self;' >> esm/index.js",
+    "min": "uglifyjs index.js --support-ie8 --comments=/^!/ -c -m -o min.js",
+    "size": "cat index.js | wc -c && cat min.js | wc -c && gzip -c9 min.js | wc -c && cat min.js | brotli | wc -c",
+    "coveralls": "cat ./coverage/lcov.info | coveralls",
+    "test": "istanbul cover test/index.js"
+  },
+  "keywords": [
+    "WeakRef",
+    "FinalizationGroup",
+    "polyfill",
+    "sham"
+  ],
+  "author": "Andrea Giammarchi",
+  "license": "ISC",
+  "devDependencies": {
+    "coveralls": "^3.0.4",
+    "istanbul": "^0.4.5",
+    "uglify-js": "^3.6.0"
+  }
+}
